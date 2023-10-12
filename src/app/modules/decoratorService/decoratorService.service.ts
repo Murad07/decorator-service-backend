@@ -7,24 +7,27 @@ import { IPaginationOptions } from '../../../interfaces/pagination';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import { bookSearchableFields } from './decoratorService.constant';
-import { IBook, IBookFilters } from './decoratorService.interface';
+import {
+  IDecoratorService,
+  IDecoratorServiceFilters,
+} from './decoratorService.interface';
 import { DecoratorService } from './decoratorService.model';
 import { IUser } from '../user/user.interface';
 import { Types } from 'mongoose';
 
-const createBook = async (
-  decoratorService: IBook,
+const createDecoratorService = async (
+  decoratorService: IDecoratorService,
   addedBy: IUser | Types.ObjectId
-): Promise<IBook | null> => {
+): Promise<IDecoratorService | null> => {
   decoratorService.addedBy = addedBy;
-  const newBook = await DecoratorService.create(decoratorService);
-  return newBook;
+  const newDecoratorService = await DecoratorService.create(decoratorService);
+  return newDecoratorService;
 };
 
-const getAllBooks = async (
-  filters: IBookFilters,
+const getAllDecoratorServices = async (
+  filters: IDecoratorServiceFilters,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IBook[]>> => {
+): Promise<IGenericResponse<IDecoratorService[]>> => {
   const { searchTerm, ...filtersData } = filters;
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
@@ -76,16 +79,18 @@ const getAllBooks = async (
   };
 };
 
-const getSingleBook = async (id: string): Promise<IBook | null> => {
+const getSingleDecoratorService = async (
+  id: string
+): Promise<IDecoratorService | null> => {
   const result = await DecoratorService.findById(id).populate('addedBy');
   return result;
 };
 
-const updateBook = async (
+const updateDecoratorService = async (
   id: string,
-  payload: Partial<IBook>,
+  payload: Partial<IDecoratorService>,
   addedBy: string
-): Promise<IBook | null> => {
+): Promise<IDecoratorService | null> => {
   const isExist = await DecoratorService.findOne({ _id: id, addedBy: addedBy });
 
   if (!isExist) {
@@ -97,18 +102,24 @@ const updateBook = async (
 
   const { ...bookData } = payload;
 
-  const updatedBookData: Partial<IBook> = { ...bookData };
+  const updatedDecoratorServiceData: Partial<IDecoratorService> = {
+    ...bookData,
+  };
 
-  const result = await DecoratorService.findByIdAndUpdate(id, updatedBookData, {
-    new: true,
-  });
+  const result = await DecoratorService.findByIdAndUpdate(
+    id,
+    updatedDecoratorServiceData,
+    {
+      new: true,
+    }
+  );
   return result;
 };
 
-const deleteBook = async (
+const deleteDecoratorService = async (
   id: string,
   addedBy: string
-): Promise<IBook | null> => {
+): Promise<IDecoratorService | null> => {
   const isExist = await DecoratorService.findOne({ _id: id, addedBy: addedBy });
 
   if (!isExist) {
@@ -123,10 +134,10 @@ const deleteBook = async (
   return result;
 };
 
-export const BookService = {
-  createBook,
-  getAllBooks,
-  getSingleBook,
-  updateBook,
-  deleteBook,
+export const DecoratorServiceService = {
+  createDecoratorService,
+  getAllDecoratorServices,
+  getSingleDecoratorService,
+  updateDecoratorService,
+  deleteDecoratorService,
 };

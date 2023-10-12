@@ -1,28 +1,38 @@
 import { Schema, model } from 'mongoose';
-import { IBook, BookModel } from './decoratorService.interface';
+import {
+  IDecoratorService,
+  DecoratorServiceModel,
+} from './decoratorService.interface';
+import { category, location } from './decoratorService.constant';
 
-export const BookSchema = new Schema<IBook, BookModel>(
+export const DecoratorServiceSchema = new Schema<
+  IDecoratorService,
+  DecoratorServiceModel
+>(
   {
     title: {
       type: String,
       required: true,
     },
-    author: {
-      type: String,
+    price: {
+      type: Number,
       required: true,
     },
-    genre: {
+    category: {
       type: String,
-      required: true,
+      enum: category,
     },
-    publicationDate: {
+    location: {
       type: String,
-      required: true,
+      enum: location,
     },
     addedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    serviceImage: {
+      type: String,
     },
   },
   {
@@ -33,7 +43,7 @@ export const BookSchema = new Schema<IBook, BookModel>(
   }
 );
 
-export const DecoratorService = model<IBook, BookModel>(
+export const DecoratorService = model<IDecoratorService, DecoratorServiceModel>(
   'DecoratorService',
-  BookSchema
+  DecoratorServiceSchema
 );

@@ -1,24 +1,24 @@
 import { z } from 'zod';
 
-const createBookZodSchema = z.object({
+const createDecoratorServiceZodSchema = z.object({
   body: z.object({
     title: z.string(),
-    author: z.string(),
-    genre: z.string(),
-    publicationDate: z.string(),
+    price: z.number(),
+    category: z.string(),
+    location: z.string(),
   }),
 });
 
-const updateBookZodSchema = z.object({
+const updateDecoratorServiceZodSchema = z.object({
   body: z.object({
     title: z.string().optional(),
-    author: z.string().optional(),
-    genre: z.string().optional(),
-    publicationDate: z.string().optional(),
+    price: z.string().optional(),
+    category: z.string().optional(),
+    location: z.string().optional(),
   }),
 });
 
-export const BookValidaion = {
-  createBookZodSchema,
-  updateBookZodSchema,
+export const DecoratorServiceValidaion = {
+  createDecoratorServiceZodSchema,
+  updateDecoratorServiceZodSchema,
 };

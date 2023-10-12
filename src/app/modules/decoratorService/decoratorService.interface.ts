@@ -1,19 +1,31 @@
 import { Model, Types } from 'mongoose';
 import { IUser } from '../user/user.interface';
 
-export type IBook = {
+export type IDecoratorService = {
   title: string;
-  author: string;
-  genre: string;
-  publicationDate: string;
+  category: 'Sound' | 'Light' | 'Interior' | 'Studio' | 'Others';
+  price: number;
+  location:
+    | 'Dhaka'
+    | 'Chattogram'
+    | 'Barishal'
+    | 'Rajshahi'
+    | 'Sylhet'
+    | 'Comilla'
+    | 'Rangpur'
+    | 'Mymensingh';
   addedBy: Types.ObjectId | IUser; // reference _id
+  serviceImage?: string;
 };
 
-export type BookModel = Model<IBook, Record<string, unknown>>;
+export type DecoratorServiceModel = Model<
+  IDecoratorService,
+  Record<string, unknown>
+>;
 
-export type IBookFilters = {
+export type IDecoratorServiceFilters = {
   searchTerm?: string;
   title?: string;
-  author?: string;
-  genre?: string;
+  category?: string;
+  location?: string;
 };
