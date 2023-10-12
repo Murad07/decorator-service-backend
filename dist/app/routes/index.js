@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const user_route_1 = require("../modules/user/user.route");
 const auth_route_1 = require("../modules/auth/auth.route");
 const decoratorService_route_1 = require("../modules/decoratorService/decoratorService.route");
+const review_route_1 = require("../modules/review/review.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -20,6 +21,10 @@ const moduleRoutes = [
     {
         path: '/service',
         route: decoratorService_route_1.DecoratorServiceRoutes,
+    },
+    {
+        path: '/reviews',
+        route: review_route_1.ReviewRoutes,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));

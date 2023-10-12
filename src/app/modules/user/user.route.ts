@@ -7,7 +7,11 @@ import { ENUM_USER_ROLE } from '../../../enmus/user';
 const router = express.Router();
 
 router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), UserController.getSingleUser);
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), UserController.getAllUsers);
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  UserController.getAllUsers
+);
 router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), UserController.deleteUser);
 
 router.patch(
