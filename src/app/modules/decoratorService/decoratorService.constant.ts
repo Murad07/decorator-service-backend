@@ -19,3 +19,5 @@ export const location = [
 ];
 
 export const category = ['Sound', 'Light', 'Interior', 'Studio', 'Others'];
+
+export const serviceStatus = ['Available', 'Not Available', 'Upcoming'];

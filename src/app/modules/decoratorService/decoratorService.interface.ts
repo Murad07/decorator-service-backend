@@ -16,6 +16,7 @@ export type IDecoratorService = {
     | 'Mymensingh';
   addedBy: Types.ObjectId | IUser; // reference _id
   serviceImage?: string;
+  serviceStatus: 'Available' | 'Not Available' | 'Upcoming';
 };
 
 export type DecoratorServiceModel = Model<

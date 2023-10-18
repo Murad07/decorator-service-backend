@@ -6,6 +6,7 @@ const createDecoratorServiceZodSchema = z.object({
     price: z.number(),
     category: z.string(),
     location: z.string(),
+    serviceStatus: z.string(),
   }),
 });
 
@@ -15,6 +16,7 @@ const updateDecoratorServiceZodSchema = z.object({
     price: z.string().optional(),
     category: z.string().optional(),
     location: z.string().optional(),
+    serviceStatus: z.string().optional(),
   }),
 });
 

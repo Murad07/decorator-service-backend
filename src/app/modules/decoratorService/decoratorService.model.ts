@@ -3,7 +3,7 @@ import {
   IDecoratorService,
   DecoratorServiceModel,
 } from './decoratorService.interface';
-import { category, location } from './decoratorService.constant';
+import { category, location, serviceStatus } from './decoratorService.constant';
 
 export const DecoratorServiceSchema = new Schema<
   IDecoratorService,
@@ -33,6 +33,10 @@ export const DecoratorServiceSchema = new Schema<
     },
     serviceImage: {
       type: String,
+    },
+    serviceStatus: {
+      type: String,
+      enum: serviceStatus,
     },
   },
   {
