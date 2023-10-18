@@ -5,6 +5,7 @@ export const bookFilterableFields = [
   'title',
   'category',
   'location',
+  'serviceStatus',
 ];
 
 export const location = [
