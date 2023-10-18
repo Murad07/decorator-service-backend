@@ -27,36 +27,17 @@ const updaeUserZodSchema = z
         password: z.string().optional(),
 
         name: z
-          .object({
-            firstName: z
-              .string({
-                required_error: 'First name is required',
-              })
-              .optional(),
-            lastName: z
-              .string({
-                required_error: 'Last name is required',
-              })
-              .optional(),
+          .string({
+            required_error: 'Last name is required',
           })
           .optional(),
-        email: z.string({
-          required_error: 'Email is required',
-        }),
+        email: z
+          .string({
+            required_error: 'Email is required',
+          })
+          .optional(),
       })
-      .optional()
-      .refine(
-        value => {
-          if (value && value.email) {
-            return isUniqueemail(value.email);
-          }
-          return true;
-        },
-        {
-          message: 'Phone number already exists',
-          path: ['body', 'email'],
-        }
-      ),
+      .optional(),
   })
   .refine(value => Object.keys(value.body ?? {}).length > 0, {
     message: 'Request body is empty',

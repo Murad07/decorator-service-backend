@@ -83,6 +83,7 @@ const userProfile = catchAsync(async (req: Request, res: Response) => {
 
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
+  // const objectId = new mongoose.Types.ObjectId(id);
   const updatedData = req.body;
 
   const result = await UserService.updateUser(id, updatedData);
