@@ -8,6 +8,10 @@ import { UserService } from './user.service';
 import pick from '../../../shared/pick';
 import { userFilterableFields } from './user.constant';
 import { paginationFields } from '../../../constants/pagination';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
+import config from '../../../config';
+import { Secret } from 'jsonwebtoken';
 
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -52,6 +56,31 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const userProfile = catchAsync(async (req: Request, res: Response) => {
+  // identify the user role
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  req.user = verifiedUser; // role  , userid
+  const id = req.user._id;
+  console.log('mm: ' + JSON.stringify(req.user));
+
+  const result = await UserService.getSingleUser(id);
+
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User fetched successfully',
+    data: result,
+  });
+});
+
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const updatedData = req.body;
@@ -85,4 +114,5 @@ export const UserController = {
   getAllUsers,
   updateUser,
   deleteUser,
+  userProfile,
 };
