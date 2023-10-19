@@ -28,6 +28,10 @@ exports.DecoratorServiceSchema = new mongoose_1.Schema({
     serviceImage: {
         type: String,
     },
+    serviceStatus: {
+        type: String,
+        enum: decoratorService_constant_1.serviceStatus,
+    },
 }, {
     timestamps: true,
     toJSON: {

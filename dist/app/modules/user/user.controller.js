@@ -31,6 +31,9 @@ const user_service_1 = require("./user.service");
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const user_constant_1 = require("./user.constant");
 const pagination_1 = require("../../../constants/pagination");
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
+const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
+const config_1 = __importDefault(require("../../../config"));
 const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = __rest(req.body, []);
     const result = yield user_service_1.UserService.createUser(userData);
@@ -64,8 +67,29 @@ const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+const userProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // identify the user role
+    const token = req.headers.authorization;
+    if (!token) {
+        throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'You are not authorized');
+    }
+    // verify token
+    let verifiedUser = null;
+    verifiedUser = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.secret);
+    req.user = verifiedUser; // role  , userid
+    const id = req.user._id;
+    console.log('mm: ' + JSON.stringify(req.user));
+    const result = yield user_service_1.UserService.getSingleUser(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'User fetched successfully',
+        data: result,
+    });
+}));
 const updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    // const objectId = new mongoose.Types.ObjectId(id);
     const updatedData = req.body;
     const result = yield user_service_1.UserService.updateUser(id, updatedData);
     (0, sendResponse_1.default)(res, {
@@ -91,4 +115,5 @@ exports.UserController = {
     getAllUsers,
     updateUser,
     deleteUser,
+    userProfile,
 };

@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.category = exports.location = exports.bookFilterableFields = exports.bookSearchableFields = void 0;
+exports.serviceStatus = exports.category = exports.location = exports.bookFilterableFields = exports.bookSearchableFields = void 0;
 exports.bookSearchableFields = ['title', 'category', 'location'];
 exports.bookFilterableFields = [
     'searchTerm',
     'title',
     'category',
     'location',
+    'serviceStatus',
 ];
 exports.location = [
     'Dhaka',
@@ -19,3 +20,4 @@ exports.location = [
     'Mymensingh',
 ];
 exports.category = ['Sound', 'Light', 'Interior', 'Studio', 'Others'];
+exports.serviceStatus = ['Available', 'Not Available', 'Upcoming'];

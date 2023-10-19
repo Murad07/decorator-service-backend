@@ -8,6 +8,7 @@ const createDecoratorServiceZodSchema = zod_1.z.object({
         price: zod_1.z.number(),
         category: zod_1.z.string(),
         location: zod_1.z.string(),
+        serviceStatus: zod_1.z.string(),
     }),
 });
 const updateDecoratorServiceZodSchema = zod_1.z.object({
@@ -16,6 +17,7 @@ const updateDecoratorServiceZodSchema = zod_1.z.object({
         price: zod_1.z.string().optional(),
         category: zod_1.z.string().optional(),
         location: zod_1.z.string().optional(),
+        serviceStatus: zod_1.z.string().optional(),
     }),
 });
 exports.DecoratorServiceValidaion = {
